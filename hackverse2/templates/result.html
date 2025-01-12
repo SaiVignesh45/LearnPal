@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #fff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .header .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6600;
+        }
+        .content {
+            padding: 40px;
+            background-color: #fff;
+            min-height: 400px;
+        }
+        .test-result {
+            margin-top: 20px;
+        }
+        .test-result h2 {
+            font-size: 24px;
+            color: #333;
+        }
+        .test-result .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .test-result .question h3 {
+            font-size: 18px;
+            color: #333;
+        }
+        .test-result .question p {
+            font-size: 16px;
+            color: #666;
+        }
+        .test-result .question .answer {
+            font-weight: bold;
+            color: #ff6600;
+        }
+        .test-result .question .explanation {
+            font-size: 14px;
+            color: #999;
+            margin-top: 10px;
+        }
+        .test-result .score {
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <span>Test Results</span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="test-result">
+            <h2>Your Test Results</h2>
+
+            <!-- Loop over the questions, user answers, and explanations -->
+            {% for question in questions %}
+                <div class="question">
+                    <h3>Question {{ loop.index }}: {{ question }}</h3>
+                    <p>Your Answer: <span class="answer">{{ user_answers[loop.index0] }}</span></p>
+                    <p>Explanation: <span class="explanation">{{ explanations[loop.index0] }}</span></p>
+                </div>
+            {% endfor %}
+
+            <div class="score">
+                You answered {{ user_answers|length }} questions.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

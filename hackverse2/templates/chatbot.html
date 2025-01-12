@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEARN PAL - Chat Bot</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .header {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .header .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000000;
+        }
+        .header nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #000000;
+            font-size: 16px;
+        }
+        .header nav a.active {
+            color: #ff6600;
+        }
+        .breadcrumb {
+            background-color: #f0f4f5;
+            padding: 10px 40px;
+            font-size: 14px;
+            color: #666666;
+        }
+        .breadcrumb a {
+            text-decoration: none;
+            color: #666666;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-history {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.user {
+            align-items: flex-end;
+        }
+        .message.bot {
+            align-items: flex-start;
+        }
+        .message p {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .message.user p {
+            background-color: #ff6600;
+            color: #ffffff;
+        }
+        .message.bot p {
+            background-color: #f0f4f5;
+            color: #333333;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .chat-input button {
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .chat-input button:hover {
+            background-color: #e65c00;
+        }
+        .chat-controls {
+            margin-top: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .chat-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .chat-controls button.clear-chat {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+        .chat-controls button.clear-chat:hover {
+            background-color: #cc0000;
+        }
+        .chat-controls button.new-chat {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        .chat-controls button.new-chat:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <span>LEARN PAL</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/course">Courses</a>
+            <a href="/stats">Stats</a>
+            <a href="/test_setup">Tests</a>
+            <a href="/chatbot" class="active">Chat Bot</a>
+            <a href="/profile">Profile</a>
+            <a href="/login_register">Login / Register</a>
+        </nav>
+    </div>
+    <div class="breadcrumb">
+        <a href="/">Home</a> &gt; Chat Bot
+    </div>
+    <div class="chat-container">
+        <div class="chat-history" id="chat-history">
+            <!-- Chat messages will be dynamically inserted here -->
+            {% for message in messages %}
+                <div class="message {{ 'user' if message.sender == 'user' else 'bot' }}">
+                    <p>{{ message.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your question here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <div class="chat-controls">
+            <button class="clear-chat" onclick="clearChat()">Clear Chat</button>
+            <button class="new-chat" onclick="newChat()">New Chat</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput.trim()) return;
+
+            // Add user's message to the chat history
+            const chatHistory = document.getElementById('chat-history');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerHTML = `<p>${userInput}</p>`;
+            chatHistory.appendChild(userMessage);
+
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+
+            // Scroll to the bottom of the chat history
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            // Send the message to the server
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ input: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Add bot's response to the chat history
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot';
+                botMessage.innerHTML = `<p>${data.response}</p>`;
+                chatHistory.appendChild(botMessage);
+
+                // Scroll to the bottom of the chat history
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function clearChat() {
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML = ''; // Clear the chat history
+
+            // Optionally, send a request to the server to clear the chat history in the database
+            fetch('/clear_chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function newChat() {
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML = ''; // Clear the chat history on the frontend
+            alert('New chat started!'); // Notify the user
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEARN PAL - Stats</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #fff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .header .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6600;
+        }
+        .header nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        .header nav a.active {
+            color: #ff6600;
+        }
+        .breadcrumb {
+            padding: 20px 40px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            color: #666;
+        }
+        .breadcrumb a {
+            text-decoration: none;
+            color: #666;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 40px;
+            background-color: #fff;
+            min-height: 400px;
+        }
+        .footer {
+            background-color: #f9f9f9;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-top: 1px solid #e5e5e5;
+        }
+        .footer .column {
+            flex: 1;
+            margin: 0 20px;
+        }
+        .footer .column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .footer .column p, .footer .column a {
+            font-size: 14px;
+            color: #666;
+            text-decoration: none;
+        }
+        .footer .column a:hover {
+            text-decoration: underline;
+        }
+        .footer .social-icons a {
+            margin: 0 5px;
+            color: #666;
+            font-size: 18px;
+        }
+        .footer .social-icons a:hover {
+            color: #ff6600;
+        }
+        .footer .copyright {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #999;
+            border-top: 1px solid #e5e5e5;
+        }
+        .chart-container {
+            width: 45%;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .chart-container h2 {
+            text-align: center;
+        }
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <span>LEARN PAL</span>
+        </div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/course">Courses</a>
+            <a class="active" href="/stats">Stats</a>
+            <a href="/test_setup">Tests</a>
+            <a href="/chatbot">Chat Bot</a>
+            <a href="/profile">Profile</a>
+            <a href="/logout" class="logout">Logout</a>
+        </nav>
+    </div>
+    <div class="breadcrumb">
+        <a href="#">Home</a> &gt; Stats
+    </div>
+    <div class="content">
+        <h2>Your Test Statistics</h2>
+        <div class="test-stats">
+            <h3>Test Results</h3>
+            <ul>
+                {% for test in user_tests %}
+                    <li>
+                        <strong>Subject:</strong> {{ test.subject }}<br>
+                        <strong>Date:</strong> {{ test.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="iq-stats">
+            <h3>IQ Test Results</h3>
+            <ul>
+                {% for iq_test in user_iq_tests %}
+                    <li>
+                        <strong>Score:</strong> {{ iq_test.score }}<br>
+                        <strong>Date:</strong> {{ iq_test.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
