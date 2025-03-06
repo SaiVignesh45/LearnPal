@@ -142,14 +142,6 @@ LearnPal is an interactive learning platform designed to help students enhance t
 - **Social Features**: Allow users to share their progress and achievements on social media.
 - **Mobile App**: Develop a mobile app for easier access.
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - **Flask**: For providing a simple and flexible web framework.
@@ -161,4 +153,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 Enjoy using LearnPal! If you have any questions or feedback, please feel free to reach out.
+
 
