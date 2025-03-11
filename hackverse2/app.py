@@ -11,6 +11,7 @@ import logging
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
+print("you got mail")
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'your_secret_key')  # Use environment variable for secret key
