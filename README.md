@@ -50,7 +50,7 @@ LearnPal is an interactive learning platform designed to help students enhance t
 - **Bcrypt**: A library for hashing passwords.
 - **Groq API**: An AI-powered API for generating questions and chatbot responses.
 - **Flask-Limiter**: A library for rate-limiting API requests.
-- **Dotenv**: A library for managing environment variables.
+
 
 ## Installation
 
